@@ -1,0 +1,129 @@
+* { box-sizing: border-box; }
+body { 
+    font-family: 'Segoe UI', Tahoma, sans-serif; 
+    background: #f0f4f8; 
+    margin: 0; 
+    height: 100vh; 
+    overflow: hidden; 
+}
+
+.main-wrapper {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    padding: 8px;
+}
+
+.header { 
+    flex: 0 0 auto; 
+    text-align: center; 
+    background: #1a2a3a; 
+    color: white; 
+    padding: 10px; 
+    border-radius: 4px 4px 0 0;
+}
+
+.header h2 { margin: 0; font-size: 0.9rem; letter-spacing: 1px; }
+
+/* Leyenda adaptable */
+.legend { 
+    display: flex; 
+    justify-content: center; 
+    gap: 15px; 
+    margin-top: 8px; 
+    font-size: 0.65rem; 
+}
+
+.leg-group { 
+    display: flex; 
+    align-items: center; 
+    gap: 8px; 
+    background: rgba(255,255,255,0.1);
+    padding: 3px 8px;
+    border-radius: 4px;
+}
+
+.leg-title { font-weight: bold; color: #bdc3c7; margin-right: 4px; }
+.leg-item { display: flex; align-items: center; gap: 4px; }
+.box { width: 10px; height: 10px; border-radius: 2px; }
+
+.f-box-prev { background: #f39c12; border: 1px solid #d35400; }
+.c-box-prev { background: #ffe0b2; border: 1px dashed #f39c12; }
+.f-box-next { background: #27ae60; border: 1px solid #1e8449; }
+.c-box-next { background: #c8e6c9; border: 1px dashed #27ae60; }
+
+.tabla-carrera { 
+    flex: 1; 
+    background: white; 
+    border: 1px solid #cfd8dc; 
+    display: flex; 
+    flex-direction: column;
+}
+
+.fila { 
+    flex: 1; 
+    display: flex; 
+    border-bottom: 1px solid #eceff1; 
+    overflow: hidden;
+}
+
+.etiqueta { 
+    width: 65px; 
+    min-width: 65px; 
+    background: #f8f9fa; 
+    border-right: 3px solid #1a2a3a; 
+    display: flex; 
+    align-items: center; 
+    justify-content: center; 
+    text-align: center; 
+    font-size: 0.6rem; 
+    font-weight: bold; 
+    color: #1a2a3a;
+}
+
+.materias { 
+    display: flex; 
+    align-items: center; 
+    gap: 8px; 
+    padding: 0 15px; 
+    flex-grow: 1;
+    overflow-x: auto;
+}
+
+.materia {
+    width: 170px; 
+    min-width: 170px; 
+    height: 70%; 
+    max-height: 65px; /* Aumentado para nombres de Kinesiologia */
+    background: #fff; 
+    border: 1px solid #b0bec5; 
+    border-radius: 4px;
+    display: flex; 
+    align-items: center; 
+    justify-content: center;
+    text-align: center; 
+    font-size: 0.65rem; 
+    cursor: pointer;
+    transition: all 0.2s ease; 
+    line-height: 1.1; 
+    padding: 6px;
+    color: #263238;
+}
+
+.selected { background: #1a2a3a !important; color: white !important; transform: scale(1.05); z-index: 10; box-shadow: 0 4px 12px rgba(0,0,0,0.2); }
+.previa-final { background: #f39c12 !important; color: white !important; border: 2px solid #d35400; font-weight: bold; }
+.previa-cursada { background: #ffe0b2 !important; color: #d35400 !important; border: 1px dashed #f39c12; }
+.siguiente-final { background: #27ae60 !important; color: white !important; border: 2px solid #1e8449; font-weight: bold; }
+.siguiente-cursada { background: #c8e6c9 !important; color: #1e8449 !important; border: 1px dashed #27ae60; }
+
+/* --- AJUSTE PARA TELÉFONOS --- */
+@media (max-width: 768px) {
+    body { overflow-y: auto; height: auto; }
+    .main-wrapper { height: auto; }
+    .legend { flex-direction: column; align-items: center; }
+    .leg-group { width: 100%; justify-content: center; }
+    .fila { flex-direction: column; height: auto; margin-bottom: 10px; border-bottom: 2px solid #eceff1; }
+    .etiqueta { width: 100%; height: 35px; border-right: none; border-bottom: 2px solid #1a2a3a; }
+    .materias { flex-wrap: wrap; justify-content: center; padding: 10px; height: auto; }
+    .materia { width: 100%; max-width: none; min-height: 45px; height: auto; font-size: 0.75rem; }
+}
