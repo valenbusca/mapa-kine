@@ -4,45 +4,16 @@ body {
     background: #f0f4f8; 
     margin: 0; 
     height: 100vh; 
-    overflow: hidden; 
+    overflow-x: hidden; /* Evita scrolleo horizontal */
+    overflow-y: auto; /* Permite scroll vertical general */
 }
 
-.main-wrapper {
-    display: flex;
-    flex-direction: column;
-    height: 100vh;
-    padding: 8px;
-}
-
-.header { 
-    flex: 0 0 auto; 
-    text-align: center; 
-    background: #1a2a3a; 
-    color: white; 
-    padding: 10px; 
-    border-radius: 4px 4px 0 0;
-}
-
+.main-wrapper { display: flex; flex-direction: column; min-height: 100vh; padding: 8px; position: relative; }
+.header { flex: 0 0 auto; text-align: center; background: #1a2a3a; color: white; padding: 10px; border-radius: 4px 4px 0 0; }
 .header h2 { margin: 0; font-size: 0.9rem; letter-spacing: 1px; }
 
-/* Leyenda adaptable */
-.legend { 
-    display: flex; 
-    justify-content: center; 
-    gap: 15px; 
-    margin-top: 8px; 
-    font-size: 0.65rem; 
-}
-
-.leg-group { 
-    display: flex; 
-    align-items: center; 
-    gap: 8px; 
-    background: rgba(255,255,255,0.1);
-    padding: 3px 8px;
-    border-radius: 4px;
-}
-
+.legend { display: flex; justify-content: center; gap: 15px; margin-top: 8px; font-size: 0.65rem; flex-wrap: wrap; }
+.leg-group { display: flex; align-items: center; gap: 8px; background: rgba(255,255,255,0.1); padding: 3px 8px; border-radius: 4px; }
 .leg-title { font-weight: bold; color: #bdc3c7; margin-right: 4px; }
 .leg-item { display: flex; align-items: center; gap: 4px; }
 .box { width: 10px; height: 10px; border-radius: 2px; }
@@ -52,78 +23,76 @@ body {
 .f-box-next { background: #27ae60; border: 1px solid #1e8449; }
 .c-box-next { background: #c8e6c9; border: 1px dashed #27ae60; }
 
-.tabla-carrera { 
-    flex: 1; 
-    background: white; 
-    border: 1px solid #cfd8dc; 
-    display: flex; 
-    flex-direction: column;
-}
+.tabla-carrera { flex: 1; background: white; border: 1px solid #cfd8dc; display: flex; flex-direction: column; }
 
-.fila { 
-    flex: 1; 
-    display: flex; 
-    border-bottom: 1px solid #eceff1; 
-    overflow: hidden;
-}
+/* AJUSTE CLAVE: Altura automática y estiramiento */
+.fila { display: flex; border-bottom: 1px solid #eceff1; min-height: 70px; height: auto; align-items: stretch; }
 
 .etiqueta { 
-    width: 65px; 
-    min-width: 65px; 
-    background: #f8f9fa; 
-    border-right: 3px solid #1a2a3a; 
-    display: flex; 
-    align-items: center; 
-    justify-content: center; 
-    text-align: center; 
-    font-size: 0.6rem; 
-    font-weight: bold; 
-    color: #1a2a3a;
+    width: 65px; min-width: 65px; background: #f8f9fa; border-right: 3px solid #1a2a3a; 
+    display: flex; align-items: center; justify-content: center; text-align: center; 
+    font-size: 0.6rem; font-weight: bold; color: #1a2a3a;
 }
 
+/* AJUSTE CLAVE: Flex wrap para que bajen de renglón solas */
 .materias { 
-    display: flex; 
-    align-items: center; 
-    gap: 8px; 
-    padding: 0 15px; 
-    flex-grow: 1;
-    overflow-x: auto;
+    display: flex; align-items: center; justify-content: flex-start; gap: 8px; 
+    padding: 12px; flex-grow: 1; flex-wrap: wrap; height: auto;
 }
 
 .materia {
-    width: 170px; 
-    min-width: 170px; 
-    height: 70%; 
-    max-height: 65px; /* Aumentado para nombres de Kinesiologia */
-    background: #fff; 
-    border: 1px solid #b0bec5; 
-    border-radius: 4px;
-    display: flex; 
-    align-items: center; 
-    justify-content: center;
-    text-align: center; 
-    font-size: 0.65rem; 
-    cursor: pointer;
-    transition: all 0.2s ease; 
-    line-height: 1.1; 
-    padding: 6px;
-    color: #263238;
+    width: 140px; /* Un poco mas angostas para que entren más */
+    height: 55px;
+    background: #fff; border: 1px solid #b0bec5; border-radius: 4px; 
+    display: flex; align-items: center; justify-content: center;
+    text-align: center; font-size: 0.65rem; cursor: pointer; transition: all 0.2s ease; 
+    line-height: 1.1; padding: 6px; color: #263238; position: relative;
 }
 
-.selected { background: #1a2a3a !important; color: white !important; transform: scale(1.05); z-index: 10; box-shadow: 0 4px 12px rgba(0,0,0,0.2); }
+/* Interacciones visuales */
+.selected { background: #1a2a3a !important; color: white !important; transform: scale(1.05); z-index: 10; box-shadow: 0 4px 12px rgba(0,0,0,0.2); border-color: #1a2a3a; }
 .previa-final { background: #f39c12 !important; color: white !important; border: 2px solid #d35400; font-weight: bold; }
 .previa-cursada { background: #ffe0b2 !important; color: #d35400 !important; border: 1px dashed #f39c12; }
 .siguiente-final { background: #27ae60 !important; color: white !important; border: 2px solid #1e8449; font-weight: bold; }
 .siguiente-cursada { background: #c8e6c9 !important; color: #1e8449 !important; border: 1px dashed #27ae60; }
 
+/* Estados guardados por el usuario */
+.estado-cursada { background: #fffde7; border: 2px solid #fbc02d; }
+.estado-final { background: #e8f5e9; border: 2px solid #388e3c; font-weight: 600; }
+
+/* Burbuja de nota */
+.nota-badge {
+    position: absolute; top: -8px; right: -8px; background: #1a2a3a; color: white;
+    width: 20px; height: 20px; border-radius: 50%; display: flex; align-items: center;
+    justify-content: center; font-size: 0.6rem; font-weight: bold; box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+}
+
+/* --- PANEL LATERAL --- */
+.side-panel {
+    position: fixed; right: -320px; top: 0; width: 300px; height: 100vh;
+    background: white; box-shadow: -4px 0 15px rgba(0,0,0,0.1); padding: 20px;
+    transition: right 0.3s ease; z-index: 100; display: flex; flex-direction: column;
+}
+.side-panel.open { right: 0; }
+.close-btn { align-self: flex-end; background: none; border: none; font-size: 1.5rem; cursor: pointer; color: #546e7a; }
+#panel-title { margin-top: 0; color: #1a2a3a; font-size: 1rem; border-bottom: 2px solid #eceff1; padding-bottom: 10px; }
+.panel-section { margin-top: 20px; }
+.section-title { font-size: 0.8rem; font-weight: bold; color: #455a64; margin-bottom: 10px; }
+.status-buttons { display: flex; flex-direction: column; gap: 8px; }
+.btn-status { padding: 10px; border: 1px solid #cfd8dc; background: white; border-radius: 6px; cursor: pointer; font-size: 0.85rem; text-align: left; transition: 0.2s; }
+.btn-status.active { background: #eceff1; border-color: #78909c; font-weight: bold; }
+#grade-input { width: 100%; padding: 10px; border: 1px solid #cfd8dc; border-radius: 6px; font-size: 0.9rem; }
+.save-btn { margin-top: auto; padding: 12px; background: #1a2a3a; color: white; border: none; border-radius: 6px; cursor: pointer; font-weight: bold; font-size: 0.9rem; transition: 0.2s; }
+.save-btn:hover { background: #263238; }
+
 /* --- AJUSTE PARA TELÉFONOS --- */
 @media (max-width: 768px) {
-    body { overflow-y: auto; height: auto; }
-    .main-wrapper { height: auto; }
-    .legend { flex-direction: column; align-items: center; }
-    .leg-group { width: 100%; justify-content: center; }
     .fila { flex-direction: column; height: auto; margin-bottom: 10px; border-bottom: 2px solid #eceff1; }
     .etiqueta { width: 100%; height: 35px; border-right: none; border-bottom: 2px solid #1a2a3a; }
-    .materias { flex-wrap: wrap; justify-content: center; padding: 10px; height: auto; }
-    .materia { width: 100%; max-width: none; min-height: 45px; height: auto; font-size: 0.75rem; }
+    .materias { justify-content: center; padding: 10px; }
+    .materia { width: 45%; max-width: 160px; min-height: 55px; height: auto; font-size: 0.7rem; }
+    
+    /* El panel sale desde abajo en el celu */
+    .side-panel { width: 100%; height: auto; bottom: -100%; top: auto; right: 0; border-radius: 15px 15px 0 0; transition: bottom 0.3s ease; padding-bottom: 30px; }
+    .side-panel.open { bottom: 0; right: 0; }
 }
