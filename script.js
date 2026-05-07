@@ -1,7 +1,9 @@
 // --- CONFIGURACIÓN DE SUPABASE ---
 const supabaseUrl = 'https://ywptlghrksvsvhiqqgcg.supabase.co'; 
 const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inl3cHRsZ2hya3N2c3ZoaXFxZ2NnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzgxNzA3MDgsImV4cCI6MjA5Mzc0NjcwOH0.nYwso3im2NfNHCPujIrzEo5nQm249pSgR8J3dlwYsSY';
-const supabase = window.supabase.createClient(supabaseUrl, supabaseKey);
+
+// LE CAMBIAMOS EL NOMBRE A LA VARIABLE ACÁ:
+const miSupabase = window.supabase.createClient(supabaseUrl, supabaseKey);
 
 let materiaSeleccionada = null;
 let estadoTemporal = 'pendiente';
@@ -115,32 +117,29 @@ function cerrarPanel() {
     materiaSeleccionada = null;
 }
 
-// Acá le hablamos a Supabase para guardar
+// Acá le hablamos a Supabase para guardar (USANDO miSupabase)
 async function guardarMateria() {
     if (!materiaSeleccionada) return;
     
-    // Cambiamos el texto del botón para mostrar que está cargando
     const btnGuardar = document.getElementById('save-btn');
     btnGuardar.innerText = "Guardando...";
     
     const inputNota = document.getElementById('grade-input');
     let notaValor = null;
     if (estadoTemporal === 'final' && inputNota.value !== '') {
-        notaValor = parseFloat(inputNota.value); // Lo pasamos a número
+        notaValor = parseFloat(inputNota.value);
     }
 
     try {
         if (estadoTemporal === 'pendiente') {
-            // Si es pendiente, la borramos de la base de datos
-            await supabase
+            await miSupabase
                 .from('materias_progreso')
                 .delete()
                 .eq('materia_id', materiaSeleccionada);
                 
             delete memoriaMaterias[materiaSeleccionada];
         } else {
-            // Upsert: Si no existe la crea, si existe la actualiza
-            await supabase
+            await miSupabase
                 .from('materias_progreso')
                 .upsert({ 
                     materia_id: materiaSeleccionada, 
@@ -162,16 +161,15 @@ async function guardarMateria() {
     }
 }
 
-// Acá le hablamos a Supabase cuando entramos a la página para cargar todo
+// Acá le hablamos a Supabase al cargar la página (USANDO miSupabase)
 async function cargarDatosGuardados() {
     try {
-        const { data, error } = await supabase
+        const { data, error } = await miSupabase
             .from('materias_progreso')
             .select('*');
             
         if (error) throw error;
 
-        // Transformamos lo que viene de Supabase a nuestro objeto de memoria
         memoriaMaterias = {};
         if (data) {
             data.forEach(fila => {
